@@ -1,9 +1,20 @@
 language: ruby
-script: echo '\documentclass{article}\begin{document}Hello, world!\end{document}' | pdflatex
+script: >
+  echo '\documentclass{article}\begin{document}Hello, world!\end{document}' | pdflatex
 
 before_install:
-  - echo "Downloading portable TeX Live installation..."
-  - curl -L https://raw.githubusercontent.com/thomasjo/travis-texlive/master/texlive.tar.xz | tar xJC ~
+  - curl -L https://raw.githubusercontent.com/krlmlr/texlive-squashfs/master/out/texlive.tar.xz | tar xJC ~
 
 install:
-  - PATH=$HOME/texlive/bin/x86_64-darwin:$PATH
+  - PATH=$HOME/texlive/bin/x86_64-linux:$PATH
+
+deploy:
+  provider: releases
+  api_key:
+    secure: MRdzi6bneGLlCxw1DNS09mbUzdu/YqyfjkbQ/aAFDmqpchxG7PgtZWlBsTiqOiDJYZgd+R3lMXNfMO+Q8HC69Ydr5H3Goe2XP3WfakETlAX829gkUqULdxuKdGXIzTREehtOxVb0dsxEvsp/fLSCLRMwpWgYztFnH1kObSX8AeI=
+  file: article.pdf
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+    repo: cdlm/github-travis-latex
