@@ -1,0 +1,9 @@
+language: ruby
+script: echo '\documentclass{article}\begin{document}Hello, world!\end{document}' | pdflatex
+
+before_install:
+  - echo "Downloading portable TeX Live installation..."
+  - curl -L https://raw.githubusercontent.com/thomasjo/travis-texlive/master/texlive.tar.xz | tar xJC ~
+
+install:
+  - PATH=$HOME/texlive/bin/x86_64-darwin:$PATH
